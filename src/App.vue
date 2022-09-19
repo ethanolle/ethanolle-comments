@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <header>
+  <header style="text-align:center;">
     <h1>
       Liste des jedis
+    <br >
+    <span style="font-size:12px">(cliquez sur le nom du personnage pour afficher son acteur)</span>
     </h1>
     <div class="wrapper"></div>
   </header>

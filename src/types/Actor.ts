@@ -1,5 +1,5 @@
 export interface Actor {
   name: string
-  birthdate?: number
+  birthdate?: string
   birthplace?: string
 }

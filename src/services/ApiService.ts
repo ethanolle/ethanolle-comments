@@ -61,4 +61,19 @@ export default class ApiService {
         return { success: true, error };
       })
   }
+
+  public getActorDetailsFromIMDB(actorId: string): Promise<any> {
+    return axios.get(`${IMDB_API}/Name/${IMDB_KEY}/${actorId}`)
+      .then(function (response) {
+        console.log(response);
+        if (response.data) {
+          return { success: true, data: response.data };
+        }
+        return { success: false, error: null };
+      })
+      .catch(function (error) {
+        console.log(error);
+        return { success: true, error };
+      })
+  }
 }

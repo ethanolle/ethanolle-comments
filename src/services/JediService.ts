@@ -11,7 +11,7 @@ export default class JediService {
     const jedis: Character[] = [];
 
     characters.forEach((character) => {
-      if (character.affiliations.includes("Jedi Order")) {
+      if (character.affiliations.includes("Jedi Order") || character.formerAffiliations.includes("Jedi Order")) {
         console.log(character.name);
         jedis.push({ name: character.name });
       }
