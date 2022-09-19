@@ -1,11 +1,6 @@
+import { type Actor } from "./Actor"
+
 export interface Character {
   name: string
-  actor: Actor
+  actor?: Actor
 } 
-
-export interface Actor {
-  firstname: string
-  lastname: string
-  birthdate: number
-  birthplace: string
-}
