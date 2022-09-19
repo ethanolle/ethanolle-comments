@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p build-only",
-    "deploy": "git subtree push --prefix dist origin public",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
-    "@types/node": "^16.11.56",
+    "@types/node": "^16.11.59",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
