@@ -33,10 +33,8 @@ export default defineComponent({
     const isLoading = ref(true);
 
     onMounted(async () => {
-      console.log("coucou");
       jedis.value = await jediService.getAllJedisFromMovies();
       isLoading.value = false;
-      console.log("jedis.value", jedis.value);
     });
 
     return {
@@ -48,7 +46,6 @@ export default defineComponent({
     async getJediDetail(jedi: Character) {
       this.isLoading = true;
       const jediWithActorData = await actorService.getActorFromIMDB(jedi);
-      console.log("coucou", jediWithActorData);
       // replace jedi with new jedi retrieved
       const index = this.jedis.findIndex(
         (j: Character) => j.swapiId === jedi.swapiId

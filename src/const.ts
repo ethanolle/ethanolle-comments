@@ -1,7 +1,7 @@
 export const SWAPI_URL = 'https://swapi.dev/api';
 export const IMDB_API = 'https://imdb-api.com/en/API';
 // todo : cacher la clé
-export const IMDB_KEY = 'pk_4rghiow107wzt4ec1';
+export const IMDB_KEY = import.meta.env.VITE_IMDB_KEY;
 
 export const MOVIES_IDS = [
   {
