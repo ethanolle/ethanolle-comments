@@ -1,8 +1,12 @@
 <template>
   <main>
+    <!-- <img src="../assets/img/loader.gif" /> -->
+    <h2 v-if="isLoading">
+      Chargement en cours...
+    </h2>
     <div v-for="jedi in jedis" :key="jedi.swapId">
-      <span @click="getJediDetail(jedi)">• {{ jedi.name }}</span>
-      <div v-if="jedi.actor">
+      <span style="cursor:pointer;" @click="getJediDetail(jedi)">• {{ jedi.name }}</span>
+      <div v-if="jedi.actor" style="margin-left: 20px;">
         Acteur : {{jedi.actor.name}}
       </div>
     </div>
@@ -22,19 +26,23 @@ const actorService = new ActorService();
 export default defineComponent({
   setup() {
     const jedis = ref([]);
+    const isLoading = ref(true);
 
     onMounted(async () => {
       console.log("coucou");
       jedis.value = await jediService.getAllJedisFromMovies();
+      isLoading.value = false;
       console.log("jedis.value", jedis.value);
     });
 
     return {
       jedis,
+      isLoading
     };
   },
   methods: {
     async getJediDetail(jedi: Character) {
+      this.isLoading = true;
       const jediWithActorData = await actorService.getActorFromIMDB(jedi);
         console.log("coucou", jediWithActorData);
       // replace jedi with new jedi retrieved
@@ -42,6 +50,7 @@ export default defineComponent({
         (j: Character) => j.swapiId === jedi.swapiId
       );
       this.jedis[index] = jediWithActorData;
+        this.isLoading = false;
 
     },
   },

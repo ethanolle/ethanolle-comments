@@ -6,7 +6,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 <template>
   <header>
     <h1>
-      Liste des jedis (mettre loader)
+      Liste des jedis
     </h1>
     <div class="wrapper"></div>
   </header>
