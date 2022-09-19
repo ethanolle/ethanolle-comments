@@ -1,6 +1,8 @@
 import { type Actor } from "./Actor"
 
 export interface Character {
-  name: string
+  swapiId?: number,
+  name: string,
+  movieId?: number,
   actor?: Actor
 } 

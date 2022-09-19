@@ -22,52 +22,58 @@ export default class JediService {
 
 
   public async getAllJedisFromMovies(): Promise<Character[]> {
-    const moviesRequest = await apiService.getAllMoviesFromSWAPI();
-    if (moviesRequest.success) {
-      const charactersId: string[] = [];
-      console.log("RESULT", moviesRequest);
-      moviesRequest.data.results.forEach((movie: any) => {
-        // add all characters ID from movies in charactersId array
-        movie.characters.forEach((character: any) => {
-          // console.log('split', character.split("/")[5]);
-          const charId = character.split("/")[5];
-          if (!charactersId.includes(charId))
-            charactersId.push(charId);
-        });
-      });
-      console.log("charactersId", charactersId);
 
-      // get all characters from all movies
-      const moviesCharacters: Character[] = [];
-      for (let i = 0; i < charactersId.length; i++) {
-        const characterRequest = await apiService.getCharacterFromSWAPI(parseInt(charactersId[i]));
-        if (characterRequest.success) {
-          const character = characterRequest.data;
-          moviesCharacters.push({ name: character.name });
-        }
-        else {
-          // error
-          return [];
-        }
-      }
-      console.log("moviesCharacters", moviesCharacters);
-
-      // sort characters to retrieve only jedis
-      const jedis: Character[] = [];
-      const jediList = this.getJedisFromLocalSource();
-
-      moviesCharacters.forEach((character) => {
-        if (jediList.find((jedi: any) => { jedi.name.toLowerCase() === character.name.toLowerCase() }) !== undefined) {
-          jedis.push(character);
-        }
-      });
-
-      return jedis;
+    if (localStorage.getItem("moviesJedis") !== null) {
+      // console.log("already got", JSON.parse(localStorage.getItem("moviesJedis"))) ;
+      return JSON.parse(localStorage.getItem("moviesJedis"));
     }
     else {
-      // todo : handle error
-      return [];
+
+      const moviesRequest = await apiService.getAllMoviesFromSWAPI();
+      if (moviesRequest.success) {
+        const charactersId: string[] = [];
+        console.log("RESULT", moviesRequest);
+        moviesRequest.data.results.forEach((movie: any) => {
+          // add all characters ID from movies in charactersId array
+          movie.characters.forEach((character: any) => {
+            const charId = character.split("/")[5];
+            if (!charactersId.includes(charId))
+              charactersId.push(charId);
+          });
+        });
+
+        const jedis: Character[] = [];
+        const jediList = this.getJedisFromLocalSource();
+
+        // get all characters from all movies
+        for (let i = 0; i < charactersId.length; i++) {
+          const characterRequest = await apiService.getCharacterFromSWAPI(parseInt(charactersId[i]));
+          if (characterRequest.success) {
+            const character = characterRequest.data;
+            if (jediList.find((jedi: any) => { return jedi.name.toLowerCase() === character.name.toLowerCase() }) !== undefined) {
+              jedis.push({ name: character.name, movieId: character.films[0].split("/")[5], swapiId: character.url.split("/")[5] });
+            }
+          }
+          else {
+            // error
+            return [];
+          }
+        }
+
+        console.log("jedis", jedis);
+
+        if (jedis.length) {
+          localStorage.setItem("moviesJedis", JSON.stringify(jedis));
+        }
+
+        return jedis;
+      }
+      else {
+        // todo : handle error
+        return [];
+      }
     }
+
   };
 
 }
