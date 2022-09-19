@@ -1,6 +1,6 @@
 export const SWAPI_URL = 'https://swapi.dev/api';
 export const IMDB_API = 'https://imdb-api.com/en/API';
-export const IMDB_KEY = 'k_7k1y2q1v';
+export const IMDB_KEY = 'pk_4rghiow107wzt4ec1';
 
 export const MOVIES_IDS = [
   {

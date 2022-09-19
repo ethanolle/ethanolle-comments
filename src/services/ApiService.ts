@@ -43,10 +43,12 @@ export default class ApiService {
       })
   };
 
-  public getMovieCastFromIMDB(filmId: number): Promise<any> {
-    const id = MOVIES_IDS.find((movie: any) => { return movie.id === filmId });
+  public getMovieCastFromIMDB(movieId: number): Promise<any> {
+    console.log("movieID", movieId);
+    const movie = MOVIES_IDS.find((movie: any) => { return movie.id == movieId });
+    console.log("movie", movie);
 
-    return axios.get(`${IMDB_API}/Title/${IMDB_KEY}/${id}/FullCast`)
+    return axios.get(`${IMDB_API}/FullCast/${IMDB_KEY}/${movie.IMDB_ID}`)
       .then(function (response) {
         console.log(response);
         if (response.data) {
