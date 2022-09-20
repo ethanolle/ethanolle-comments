@@ -18,7 +18,6 @@ export default class ActorService {
         const actorDetailsRequest = await apiService.getActorDetailsFromIMDB(imdbActor.id);
         if (actorDetailsRequest.success === true) {
           actor.birthdate = actorDetailsRequest.data.birthDate;
-          imdbActor.birthdate = actor.birthdate;
         } else {
           // handle error
         }
@@ -40,7 +39,6 @@ export default class ActorService {
         const actorDetailsRequest = await apiService.getActorDetailsFromIMDB(imdbActor.id);
         if (actorDetailsRequest.success === true) {
           actor.birthdate = actorDetailsRequest.data.birthDate;
-          imdbActor.birthdate = actor.birthdate;
         } else {
           // handle error
         }

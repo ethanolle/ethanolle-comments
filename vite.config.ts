@@ -13,3 +13,10 @@ export default defineConfig({
   },
   base: '/jedis/',
 })
+
+
+/**
+ * TODO
+ * Retirer le loader du dossier
+ * retirer le img loader du html
+ */

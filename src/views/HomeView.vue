@@ -1,7 +1,6 @@
 <template>
   <main>
-    <!-- <img src="../assets/img/loader.gif" /> -->
-    <h2 v-if="isLoading">Chargement en cours...</h2>
+    <h2 v-if="isLoading">Récupération des jedis...</h2>
     <div v-for="jedi in jedis" :key="jedi.swapId">
       <span style="cursor: pointer" @click="getJediDetail(jedi)"
         >• {{ jedi.name }}</span

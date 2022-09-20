@@ -36,19 +36,17 @@ export default class JediService {
         const jedis: Character[] = [];
         const jediList = this.getJedisFromLocalSource();
 
-        // get all characters from all movies
-        for (let i = 0; i < charactersId.length; i++) {
-          const characterRequest = await apiService.getCharacterFromSWAPI(parseInt(charactersId[i]));
-          if (characterRequest.success) {
-            const character = characterRequest.data;
-            if (jediList.find((jedi: any) => { return jedi.name.toLowerCase() === character.name.toLowerCase() }) !== undefined) {
-              jedis.push({ name: character.name, movieId: character.films[0].split("/")[5], swapiId: character.url.split("/")[5] });
-            }
-          } else {
-            // error
-            return [];
+        // ger all characters
+        const allRemoteCharacters = await apiService.getAllCharactersFromSWAPI();
+
+        allRemoteCharacters.forEach(remoteCharacter => {
+          if (charactersId.includes(remoteCharacter.url.split("/")[5]) &&
+            jediList.find(jedi => jedi.name.toLowerCase() === remoteCharacter.name.toLowerCase())
+          ) {
+            jedis.push({ name: remoteCharacter.name, movieId: remoteCharacter.films[0].split("/")[5], swapiId: remoteCharacter.url.split("/")[5] });
           }
-        }
+
+        });
 
         if (jedis.length) {
           localStorage.setItem("moviesJedis", JSON.stringify(jedis));

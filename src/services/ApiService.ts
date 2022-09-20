@@ -17,6 +17,34 @@ export default class ApiService {
       })
   }
 
+  public getAllCharactersFromSWAPI(): Promise<any[]> {
+    let dataToRetrieveLeft = true;
+    let page = 1;
+    let characters: any[] = [];
+    return new Promise(async (resolve, reject) => {
+      while (dataToRetrieveLeft) {
+        await axios.get(`${SWAPI_URL}/people/?page=${page}`)
+          .then(function (response) {
+            // increment page and/or stop loop
+            if (response.data.next !== null) {
+              page++;
+            } else {
+              dataToRetrieveLeft = false;
+            }
+            if (response.data) {
+              characters = [...characters, ...response.data.results];
+            }
+          })
+          .catch(function (error) {
+            dataToRetrieveLeft = false;
+            console.log(error);
+          });
+      }
+      resolve(characters);
+    });
+  }
+
+
   public getCharacterFromSWAPI(id: number): Promise<any> {
     return axios.get(`${SWAPI_URL}/people/${id}`)
       .then(function (response) {

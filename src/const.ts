@@ -3,6 +3,7 @@ export const IMDB_API = 'https://imdb-api.com/en/API';
 // todo : cacher la clé
 export const IMDB_KEY = import.meta.env.VITE_IMDB_KEY;
 
+
 export const MOVIES_IDS = [
   {
     id: 1,
