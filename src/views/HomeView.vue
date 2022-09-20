@@ -18,11 +18,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import ApiService from "@/services/ApiService";
 import JediService from "@/services/JediService";
 import ActorService from "@/services/ActorService";
 import type { Character } from "@/types/Character";
-const apiService = new ApiService();
 const jediService = new JediService();
 const actorService = new ActorService();
 

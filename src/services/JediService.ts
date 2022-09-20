@@ -8,12 +8,9 @@ export default class JediService {
 
   public getJedisFromLocalSource(): Character[] {
     const jedis: Character[] = [];
-    characters.forEach((character) => {
-      if (character.affiliations.includes("Jedi Order") || character.formerAffiliations.includes("Jedi Order")) {
-        jedis.push({ name: character.name });
-      }
+    return characters.filter(character => {
+      return character.affiliations.includes("Jedi Order") || character.formerAffiliations.includes("Jedi Order")
     });
-    return jedis;
   }
 
   public async getAllJedisFromMovies(): Promise<Character[]> {
@@ -36,14 +33,20 @@ export default class JediService {
         const jedis: Character[] = [];
         const jediList = this.getJedisFromLocalSource();
 
-        // ger all characters
+        // ger all characters from API
         const allRemoteCharacters = await apiService.getAllCharactersFromSWAPI();
 
+        // return only characters that are in at least a movie
         allRemoteCharacters.forEach(remoteCharacter => {
           if (charactersId.includes(remoteCharacter.url.split("/")[5]) &&
             jediList.find(jedi => jedi.name.toLowerCase() === remoteCharacter.name.toLowerCase())
           ) {
-            jedis.push({ name: remoteCharacter.name, movieId: remoteCharacter.films[0].split("/")[5], swapiId: remoteCharacter.url.split("/")[5] });
+            jedis.push
+              ({
+                name: remoteCharacter.name,
+                movieId: remoteCharacter.films[0].split("/")[5],
+                swapiId: remoteCharacter.url.split("/")[5]
+              });
           }
 
         });

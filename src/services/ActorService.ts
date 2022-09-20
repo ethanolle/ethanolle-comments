@@ -4,6 +4,7 @@ import ApiService from "./ApiService";
 const apiService = new ApiService();
 
 export default class ActorService {
+  
   public async getActorFromIMDB(jedi: Character) {
     // first test if movie data already set in local storage
     let movies = [];
