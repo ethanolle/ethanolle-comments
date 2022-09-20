@@ -31,7 +31,6 @@ export default class ActorService {
     const movieRequest = await apiService.getMovieCastFromIMDB(jedi.movieId);
     if (movieRequest.success === true) {
       movies[jedi.movieId] = movieRequest.data;
-
       const imdbActor = movieRequest.data.actors.find((actor: any) => { return actor.asCharacter.toLowerCase().includes(jedi.name.toLowerCase()) }) || { name: "Acteur inconnu" };
       const actor: Actor = {
         name: imdbActor.name,
